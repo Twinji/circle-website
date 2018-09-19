@@ -1,0 +1,308 @@
+@charset "UTF-8"; /* encoding thingy that is prefered by most browsers these days */
+
+/* LOTS OF LINES, CAN'T COVER EVERYTHING IN COMMENTS */
+
+html, body {padding: 0; margin: 0;} /* removing all padding and margins from edges of viewport to ensure that background canvas covers entire area */
+body {background: linear-gradient(to top right, rgb(200, 10, 15), rgb(100, 2, 3));} /* setting a red gradient background using specific RGB values */
+
+body * { /* this will apply styling to all children of the body element - effectively making changes the entire site */
+    font-family: sans-serif; /* everything will have this font */
+    -webkit-transition: all 0.5s ease; /* adding transitions to any variable elements - support for Chrome, Safari, and even Opera I think with the -webkit- prefix */
+    -mox-transition: all 0.5s ease; /* the prefix allows for support in Firefox's rendering engine */
+    -ms-transition: all 0.5s ease; /* I think this line's prefix is for Internet Explorer */
+    -o-transition: all 0.5s ease; /* -o- is for Opera browser but apparently they're moving away from their own rendering engine to -webkit- like Chrome */
+    transition: all 0.5s ease; /* this is just the standard one with not prefix */
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0); /* the lines with 'translateZ(0)' actually allow the website to run with greater performance */
+    transform: translateZ(0); /* this is because the function 'translateZ(0)' involves 3D rendering, which forces the computer to use it's GPU (if it has one) */
+}                               /* although in this case we pass in the value of zero because I don't want anything to move, but it will enable GPU acceleration */
+
+#canvas { /* this element will hold the canvas for the dynamic background */
+    position: fixed; /* this ensures the element stays in a 'fixed' position despite scrolling */
+    width: 100%;
+    height: 100%; /* setting the width and height to 100% will ensure this element fills up all space that the parent element contains */
+    top: 0;
+    bottom: 0; /* no gaps on the top and bottom - dunno if this actually does anything but just in case */
+    z-index: -100; /* the z axis refers to the ordering of elements ontop or underneath each other - the canvas has a z-index of -100 so it displays behind everything */
+}
+
+#container { /* this elements holds the main content */
+    z-index: 100; /* this has a z-index of 100 instead so it displays above everything */
+    margin: 50px auto; /* a gap of 50 pixels above and below, and vertically centered */
+    padding-bottom: 15px;
+    overflow: hidden; /* this ensures children do not leak outside the container */
+    box-sizing: border-box; /* this ensures padding does not effect the size of the element */
+    width: 1200px;
+    height: 1200px; /* a fixed width and height ensure the page remains a circle and does not become a sausage */
+    background-color: rgba(200, 10, 15, 0.8); /* this RGB color also has an alpha parameter (the A), because I wanted it to be slightly transparent */
+    border-radius: 600px; /* the border radius rounds the corners of the element - I have set them to half the width and height to make my container a circle */
+    border: 50px double; /* the border is 50 pixels thick, and 'double' means there will be two borders - an inner and outer one */
+    border-left-color:  lightgray;
+    border-right-color: darkgray;
+    border-top-color: white;
+    border-bottom-color: gray; /* each side of the border is a different shade */
+    box-shadow: 0 0 0px 30px crimson; /* the shadow in this case is used as an extra border layer */
+}
+
+h1, h2, h3, h4, h5 { /* formatting all the headers in the same way */
+    color: rgb(200, 10, 15);
+    letter-spacing: 0.2em;
+    text-align: center;
+    margin: 0; padding: 0;
+    font-weight: bold;
+}
+
+#front-graphic {
+    padding: 75px;
+    padding-bottom: 20px;
+}
+
+#front-graphic > h1,
+#front-graphic > h2,
+#front-graphic > h3,
+#front-graphic > h4,
+#front-graphic > h5,
+#container > article > h1,
+#container > article > h2,
+#container > article > h3,
+#container > article > h4,
+#container > article > h5{ /* header that reside in certain elements will be white to be easier to see */
+    color: white;
+}
+
+#front-graphic > h1 {
+    font-size: 60px;
+    font-family: 'Arial';
+    font-weight: 800;
+    padding: 0;
+    width: 450px;
+    margin: 9px auto;
+    border-radius: 60px;
+    border: 4px solid white;
+    background-color: darkred; /* the largest header that is a direct child of front-graphic will have it's own unique styling */
+}
+
+#container > article {
+    background-color: white;
+    background-size: 100%;
+    background-position: top;
+    line-height: 1.4em;
+    color: white;
+    font-size: 19px;
+    font-family: sans-serif;
+    text-align: center;
+    padding: 50px;
+    overflow: hidden;
+}
+
+.red-space {
+    background: url(img/RedSpace.jpg);
+}
+
+.my-setup {
+    background: url(img/MySetup.jpg);
+}
+
+a { /* resetting some of the ugly defaults of links */
+    text-decoration: none;
+    color: white;
+}
+
+table { /* formatting and centering table */
+    text-align: center;
+    display: inline-block;
+    margin: 0 50px;
+}
+
+td {
+    padding: 0 25px; /* adding some padding to the left and right of columns in a table */
+}
+
+#square-button {
+    display: inline-block;
+    width: 25%;
+    overflow: hidden;
+    padding: 30px;
+    border-radius: 75px;
+    box-shadow: 0 0px 0 darkgray;
+}
+
+#square-button:hover { /* when the user hovers over this element the following styling will occur */
+    background-color: lightgray;
+    transform: translateY(-10px); /* this transformation will move the element upwards by 10 pixels */
+    box-shadow: 0 10px 0 darkgray; /* a shadow below will provide a cool 3D effect (not actually 3D though) */
+}
+
+#square-button:active { /* the :active selector is when the user actually clicks on the element */
+    transform: translateY(0); /* when this happens I make the element go back down again to make feel like a real button */
+    box-shadow: 0 0 0 darkgray;
+}
+
+#square-button:hover > img {
+    transform: scale(1.05, 1.05) translateY(-5px); /* adding a upscale and movement effect to a direct child */
+}
+
+#square-button > img {
+    width: 80%;
+    overflow: hidden;
+    border-radius: 25px;
+    border: 5px solid gray;
+    margin: 10px;
+}
+
+#icon {
+    width: 35%;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+#img-container:hover > img {
+    transform: rotateY(180deg) scale(1.1, 1.1); /* rotateY() actually is like a 3D effect */
+}
+
+#container hr {
+    margin: 0; padding: 0;
+    border: 1px solid white;
+}
+
+nav {
+    height: 40px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+#nav-item, input[type="submit"] { /* affects the nav menu buttons and specifically the 'submit' button in the form page */
+    display: inline-block;
+    padding: 0 40px;
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    letter-spacing: 2px;
+    background-color: darkred;
+    border-radius: 20px;
+    border: none;
+    margin: 0 10px;
+    box-sizing: border-box;
+    box-shadow: 0 0 0 darkred;
+    cursor: pointer; /* input tags don't change the cursor into a hand on hover, but this line changes that - this is for the 'submit' button */
+}
+
+#nav-item:hover, input[type="submit"]:hover { /* more effects when hovering */
+    background-color: crimson;
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 0 darkred;
+}
+
+#nav-item:active, input[type="submit"]:active { /* more effects when clicking */
+    background-color: darkred;
+    transform: translateY(0);
+    box-shadow: 0px 0px 0 darkred;
+    -webkit-transition: all 0.1s ease; /* here I decreased the time of transitions so when you click it's a more abrupt movement */
+    -mox-transition: all 0.1s ease;
+    -ms-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+
+#nav-item.selected { /* this ID is attached to a class and is for when you're on a certain page, that page on the nav bar is indicated */
+    background-color: white;
+    color: darkred;
+    padding-bottom: 100px;
+    font-weight: bold;
+}
+
+#white-section { /* unsurprisingly for the white parts of the page */
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+#square-button article, p, table article, form {
+    line-height: 1.4em;
+    color: darkred;
+    font-size: 17px;
+    font-family: sans-serif;
+    text-align: center;
+    margin-top: 16px;
+}
+
+form {
+    text-align: center;
+    width: 100%;
+    line-height: 1.4em;
+}
+
+input, textarea {
+    border-radius: 20px;
+    border: none;
+    background-color: lightgray;                        /* MORE OF THE SAME STYLING STUFF */
+    height: 30px;
+    padding: 1px 12px;
+    font-size: 17px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 0 0 darkgray;
+    letter-spacing: 1px;
+    overflow: hidden;
+}
+
+textarea {
+    height: 130px;
+    width: 55%;
+    resize: none;
+    padding: 12px;
+}
+
+input[type="submit"] {
+    background-color: darkred;
+}
+
+input[type="email"], input[type="text"] {
+    width: 30%;
+    height: 35px;
+}
+
+button:focus, input:focus, textarea:focus {outline: none;} /* removes this ugly outline that Chrome likes to show when selecting areas with input */
+
+input:hover, textarea:hover {
+    transform: translateY(-5px);
+    background-color: rgb(230, 230, 230);
+    box-shadow: 0 5px 0 0 darkgray;
+}
+
+input:focus, textarea:focus {
+    transform: translateY(-6px);
+    background-color: crimson;
+    box-shadow: 0 6px 0 0 darkred;
+    color: white;
+}
+
+input:focus::-webkit-input-placeholder {color: pink;} /* this changes color of text when user selects and input field, whether it'd be a input or textarea element */
+input:focus:-moz-placeholder {color: pink;}
+input:focus::-moz-placeholder {color: pink;}
+input:focus:-o-input-placeholder {color: pink;}
+input:focus:-ms-input-placeholder {color: pink;}
+textarea:focus::-webkit-input-placeholder {color: pink;}
+textarea:focus:-moz-placeholder {color: pink;}
+textarea:focus::-moz-placeholder {color: pink;}
+textarea:focus:-o-placeholder {color: pink;}
+textarea:focus:-ms-input-placeholder {color: pink;}
+
+ul { /* styling for unordered list */
+    padding-left: 34%;
+    text-align: left;
+}
+li {
+    line-height: 1.38em;
+}
+
+footer { /* nothing really special about the footer */
+    width: 100%;
+    min-height: 100px;
+    text-align: center;
+    color: white;
+    line-height: 1.4em;
+    font-size: 18px;
+    padding-top: 90px;
+}

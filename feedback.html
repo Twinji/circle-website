@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="style.css" type="text/css" rel="stylesheet"/>
+        <script src="js/script.js" type="text/javascript"></script>
+        <title>FEEDBACK</title>
+    </head>
+    <body onload="main();">
+        <canvas id="canvas"></canvas>
+        <div id="container">
+            <div id="front-graphic">
+                <h3>THIS IS</h3>
+                <h1>UNIQUE</h1>
+                <h3>WEB DESIGN</h3>
+            </div>
+            <nav>
+                <a href="index.html"><div id="nav-item">HOME</div></a>
+                <a href="about.html"><div id="nav-item">ABOUT ME</div></a>
+                <a href="portfolio.html"><div id="nav-item">PORTFOLIO</div></a>
+                <a href="feedback.html"><div id="nav-item" class="selected">FEEDBACK</div></a>
+            </nav>
+            <hr/>
+            <div id="white-section">
+                <form> <!-- this form has no ID because it isn't automated with JS therefore requires no reference -->
+                    <strong>NAME</strong> &nbsp;
+                    <input type="text" name="name" placeholder="Your name"> <!-- field for name -->
+                    <br/>
+                    <strong>EMAIL</strong> &nbsp;
+                    <input type="email" name="email" placeholder="Your email address"> <!-- field for email address -->
+                    <br/><br/>
+                    <strong>COMMENT / FEEDBACK / REQUEST</strong> <!-- the 'strong' tab makes the text bold -->
+                    <br/>
+                    Please don't hesitate to let me know your comments and feedback by entering them below. 
+                    <br/>
+                    I'm also taking requests through this system too.
+                    <br/><br/>
+                    <textarea placeholder="Your comments, feedback, or requests"></textarea>
+                    <br/><br/>
+                    <input type="submit" value="SUBMIT"> <!-- submit button -->
+                </form>
+            </div>
+            <hr/>
+            <footer>&copy; 2016 Vishnu Gunapathi. <br/> All rights reserved.</footer>
+        </div>
+    </body>
+</html>
